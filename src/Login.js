@@ -18,7 +18,6 @@ const Login = () => {
   const changeHandler = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
-
   const handleLogin = (e) => {
     e.preventDefault();
     const { email, password } = data;

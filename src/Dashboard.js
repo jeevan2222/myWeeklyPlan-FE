@@ -1,13 +1,18 @@
-import React from "react";
+import React,{useState} from "react";
+import Board from "./Board";
 import "./Dashboard.css";
-
+// import Board from "./Board";
 const Dashboard = () => {
+  const [addBoard, setAddBoard] = useState(false);
+  const handleChange = (e) => {
+    setAddBoard(true)
+  };
   return (
     <div className="dashboard-container">
       <div className="side-nav">
         <ul>
           <li>
-            <a href="">Create Board</a>
+            <a onClick={handleChange}>Create Board</a>
           </li>
           <li>
             <a href="">Task List</a>
@@ -27,6 +32,7 @@ const Dashboard = () => {
           </marquee>
         </div>
       </div>
+      {addBoard?<Board />:""}
     </div>
   );
 };

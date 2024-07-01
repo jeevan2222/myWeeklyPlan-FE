@@ -1,0 +1,25 @@
+.board{
+    height: 400px;
+    width: 500px;
+    /* background-color:; */
+    position: absolute;
+    left: 750px;
+    top: 250px;
+    align-items: center;
+    opacity: 0.8;
+    
+}
+.form-data{
+    padding: 30px;
+    margin: 20px;
+    align-items: center;
+}
+.form-data  input{
+    margin: 5px;
+    padding: 8px;
+    border-radius: 6px;
+}
+label{
+    margin: 5px;
+    padding: 8px;
+}
