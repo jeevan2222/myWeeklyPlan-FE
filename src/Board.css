@@ -3,8 +3,8 @@
     width: 500px;
     /* background-color:; */
     position: absolute;
-    left: 750px;
-    top: 250px;
+    left: 350px;
+    top: 50px;
     align-items: center;
     opacity: 0.8;
     
@@ -13,6 +13,7 @@
     padding: 30px;
     margin: 20px;
     align-items: center;
+    border:solid 1px beige ;
 }
 .form-data  input{
     margin: 5px;

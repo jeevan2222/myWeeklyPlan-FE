@@ -50,7 +50,7 @@ const Login = () => {
           navigate("/");
         } else if (result.data.status === 409) {
           setIsEmailExists(true);
-        } else {
+        } else if (result.data.status === 201){
           navigate("/dashboard");
         }
       })

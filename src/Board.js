@@ -1,7 +1,10 @@
 import "./Board.css";
 import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const Board = () => {
+const Board = ({ onBoardCreated }) => {
+  const navigate = useNavigate();
   const [data, setData] = useState({
     board_name: "",
     number_of_days: "",
@@ -16,8 +19,26 @@ const Board = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // document.contact-form.reset();
-    console.log("Form Data Submitted: ", data);
+    const { board_name, number_of_days, capacity, to_date, from_date } = data;
+    const tokenString = localStorage.getItem("token");
+
+    axios
+      .post(
+        "http://localhost:6969/board/create",
+        { board_name, number_of_days, capacity, to_date, from_date },
+        { headers: { Authorization: "Bearer "+tokenString } }
+      )
+      .then((result) => {
+        if (result.data.status === 404) {
+          navigate("/");
+        } else {
+          onBoardCreated(data); // Inform the Dashboard about the new board
+          navigate("/dashboard");
+        }
+      })
+      .catch((err) => {
+        console.error("Error during board creation:", err);
+      });
   };
 
   const { board_name, number_of_days, capacity, to_date, from_date } = data;
@@ -81,8 +102,7 @@ const Board = () => {
           />
         </label>
         <br />
-        {/* <input  type="submit">Submit</input> */}
-        <input type="button" value="Submit" id="btnsubmit" onclick="handleSubmit()"></input>
+        <input type="submit" value="Submit" />
       </form>
     </div>
   );
