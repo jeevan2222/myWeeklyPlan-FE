@@ -34,7 +34,7 @@ const Task = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     const {
       spend_hours,
       task_name,
