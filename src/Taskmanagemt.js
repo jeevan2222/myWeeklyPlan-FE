@@ -28,6 +28,8 @@ const Taskmanagement = () => {
             content: ele1.task_name,
             id: ele1.id,
             priority: ele1.task_priority,
+            remaining_hours: ele1.remaining_hours,
+            spend_hour: ele1.spend_hours,
           });
         }
       });
@@ -108,7 +110,17 @@ const Taskmanagement = () => {
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
-                          {task.content} - {task.priority}
+                          {task.content} <br></br>
+                          <p
+                            style={{
+                              color: "rgb(255, 99, 71)",
+                              display: "inline",
+                            }}
+                          >
+                            <h3>Priority</h3> {task.priority}
+                          </p>
+                          {/* <h3>Priority</h3> {task.remaining_hours} <br></br>
+                          {task.spend_hour} */}
                         </div>
                       )}
                     </Draggable>
