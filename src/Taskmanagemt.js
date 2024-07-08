@@ -4,16 +4,14 @@ import "./Taskmanahement.css";
 import axios from "axios";
 
 const initialTasks = {
-  to_do: [
-    { id: "task-1", content: "Design Homepage" },
-    { id: "task-2", content: "Set up database" },
-  ],
-  doing: [{ id: "task-3", content: "Develop login feature" }],
-  done: [{ id: "task-4", content: "Initial project setup" }],
+  to_do: [],
+  doing: [],
+  done: [],
 };
 
 const Taskmanagement = () => {
   const [tasks, setTasks] = useState(initialTasks);
+
   const fetchData = async () => {
     try {
       const tokenString = localStorage.getItem("token");
@@ -21,16 +19,32 @@ const Taskmanagement = () => {
       const result = await axios.get(`http://localhost:6969/task/${boardid}`, {
         headers: { Authorization: "Bearer " + tokenString },
       });
+      console.log("Task Data:", result.data);
+
+      const updatedTasks = { ...initialTasks };
+      result.data.BoardData.forEach((ele1) => {
+        if (updatedTasks[ele1.status]) {
+          updatedTasks[ele1.status].push({
+            content: ele1.task_name,
+            id: ele1.id,
+            priority: ele1.task_priority,
+          });
+        }
+      });
+
+      setTasks(updatedTasks);
+      console.log("Updated Tasks:", updatedTasks);
     } catch (err) {
       console.error("Error during board creation:", err);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
 
   const onDragEnd = (result) => {
-    const { destination, source, draggableId } = result;
+    const { destination, source } = result;
 
     if (!destination) return;
 
@@ -46,24 +60,26 @@ const Taskmanagement = () => {
 
     if (start === finish) {
       const newTaskIds = Array.from(start);
-      newTaskIds.splice(source.index, 1);
-      newTaskIds.splice(destination.index, 0, start[source.index]);
+      const [movedTask] = newTaskIds.splice(source.index, 1);
+      newTaskIds.splice(destination.index, 0, movedTask);
 
-      setTasks({ ...tasks, [source.droppableId]: newTaskIds });
+      setTasks((prevTasks) => ({
+        ...prevTasks,
+        [source.droppableId]: newTaskIds,
+      }));
       return;
     }
 
     const startTaskIds = Array.from(start);
-    startTaskIds.splice(source.index, 1);
-
+    const [movedTask] = startTaskIds.splice(source.index, 1);
     const finishTaskIds = Array.from(finish);
-    finishTaskIds.splice(destination.index, 0, start[source.index]);
+    finishTaskIds.splice(destination.index, 0, movedTask);
 
-    setTasks({
-      ...tasks,
+    setTasks((prevTasks) => ({
+      ...prevTasks,
       [source.droppableId]: startTaskIds,
       [destination.droppableId]: finishTaskIds,
-    });
+    }));
   };
 
   return (
@@ -82,7 +98,7 @@ const Taskmanagement = () => {
                   {tasks[status].map((task, index) => (
                     <Draggable
                       key={task.id}
-                      draggableId={task.id}
+                      draggableId={String(task.id)}
                       index={index}
                     >
                       {(provided) => (
@@ -92,7 +108,7 @@ const Taskmanagement = () => {
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
-                          {task.content}
+                          {task.content} - {task.priority}
                         </div>
                       )}
                     </Draggable>

@@ -1,36 +1,29 @@
 .taskmanagement-container {
-  margin-left: 200px; /* Adjusted for sidebar width */
-  background-color: #f9f9f9;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
 }
 
 .task-status-container {
   display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .task-status-column {
-  flex: 1;
+  background: #f4f5f7;
+  border-radius: 3px;
+  width: 30%;
+  padding: 10px;
   margin: 0 10px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.task-status-column h2 {
-  margin-top: 0;
-  font-size: 1.5em;
-  color: #333;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .task-item {
+  background: white;
+  border-radius: 3px;
   padding: 10px;
   margin-bottom: 10px;
-  background-color: #e0e0e0;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  cursor: grab;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
